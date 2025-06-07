@@ -11,9 +11,11 @@ namespace SojaExiles
 		public Animator openandcloseoven;
 		public bool open;
 		public Transform Player;
+		public AudioSource OvenDoorSound;
 
 		void Start()
 		{
+			OvenDoorSound.enabled = false;
 			open = false;
 		}
 
@@ -56,7 +58,9 @@ namespace SojaExiles
 			print("you are opening the Window");
 			openandcloseoven.Play("OpenOven");
 			open = true;
+			OvenDoorSound.enabled = true;
 			yield return new WaitForSeconds(.5f);
+			OvenDoorSound.enabled = false;
 		}
 
 		IEnumerator closing()
@@ -64,7 +68,9 @@ namespace SojaExiles
 			print("you are closing the Window");
 			openandcloseoven.Play("ClosingOven");
 			open = false;
+			OvenDoorSound.enabled = true;
 			yield return new WaitForSeconds(.5f);
+			OvenDoorSound.enabled = false;
 		}
 
 
