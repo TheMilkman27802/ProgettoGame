@@ -8,7 +8,7 @@ public class Crouch : MonoBehaviour
     public float crouchSpeed, normalHeight, crouchHeight;
     public Vector3 offset;
     public Transform player;
-    bool crouching;
+    private bool crouching;
 
     void Update()
     {
@@ -16,7 +16,7 @@ public class Crouch : MonoBehaviour
         {
             crouching = !crouching;
         }
-        if(crouching == true)
+        if(crouching)
         {
             charController.height = charController.height - crouchSpeed * Time.deltaTime;
             if(charController.height <= crouchHeight)
@@ -24,16 +24,39 @@ public class Crouch : MonoBehaviour
                 charController.height = crouchHeight;
             }
         }
-        if (crouching == false)
+        if (!crouching)
         {
-            charController.height = charController.height + crouchSpeed * Time.deltaTime;
-            if (charController.height < normalHeight)
+            var castOrigin = charController.transform.position + new Vector3(0, normalHeight - crouchHeight, 0);
+            if (Physics.Raycast(castOrigin, Vector3.up, out RaycastHit hit, 0.2f))
             {
-                player.position = player.position + offset * Time.deltaTime;
+                if (hit.point.y > normalHeight + castOrigin.y)
+                {
+                    charController.height = charController.height + crouchSpeed * Time.deltaTime;
+                    if (charController.height < normalHeight)
+                    {
+                        player.position = player.position + offset * Time.deltaTime;
+                    }
+                    if (charController.height >= normalHeight)
+                    {
+                        charController.height = normalHeight;
+                    }
+                }
+                else
+                {
+                    crouching = !crouching;
+                }
             }
-            if (charController.height >= normalHeight)
+            else
             {
-                charController.height = normalHeight;
+                charController.height = charController.height + crouchSpeed * Time.deltaTime;
+                    if (charController.height < normalHeight)
+                    {
+                        player.position = player.position + offset * Time.deltaTime;
+                    }
+                    if (charController.height >= normalHeight)
+                    {
+                        charController.height = normalHeight;
+                    }
             }
         }
     }

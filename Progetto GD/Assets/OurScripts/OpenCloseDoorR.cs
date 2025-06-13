@@ -5,11 +5,13 @@ using UnityEngine;
 public class OpenCloseDoorR : MonoBehaviour
 {
     public Animator DoorClosetHingeR;
-		public bool open;
-		public Transform Player;
+	public bool open;
+	public Transform Player;
+	public AudioSource openCloseDoor;
 
 	void Start()
 		{
+			openCloseDoor.enabled = false;
 			open = false;
 		}
     
@@ -52,15 +54,19 @@ public class OpenCloseDoorR : MonoBehaviour
 			print("you are opening the door");
 			DoorClosetHingeR.Play("OpenDoorClosetR");
 			open = true;
+			openCloseDoor.enabled = true;
 			yield return new WaitForSeconds(.5f);
+			openCloseDoor.enabled = false;
 		}
 
-		IEnumerator closing()
-		{
-			print("you are closing the door");
-			DoorClosetHingeR.Play("CloseDoorClosetR");
-			open = false;
-			yield return new WaitForSeconds(.5f);
+	IEnumerator closing()
+	{
+		print("you are closing the door");
+		DoorClosetHingeR.Play("CloseDoorClosetR");
+		open = false;
+		openCloseDoor.enabled = true;
+		yield return new WaitForSeconds(.5f);
+		openCloseDoor.enabled = false;
 		}
 
 

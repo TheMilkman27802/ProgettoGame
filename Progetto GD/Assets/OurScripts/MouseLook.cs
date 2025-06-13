@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class MouseLook : MonoBehaviour
 {
-    public enum MouseRotation {
+    public enum MouseRotation
+    {
         HorizontalRotation,
         VerticalRotation,
         BothRotation
@@ -18,7 +19,6 @@ public class MouseLook : MonoBehaviour
     private float verticalRot = 0;
     private float horizontalRot = 0;
     public MouseRotation mouseRotation = MouseRotation.BothRotation;
-    //[SerializeField] private Image Crosshair = null;
     private Camera cam;
     void Start()
     {
@@ -26,7 +26,8 @@ public class MouseLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Rigidbody body = GetComponent<Rigidbody>();
-        if (body != null){
+        if (body != null)
+        {
             body.freezeRotation = true;
         }
     }
@@ -34,7 +35,6 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Crosshair.color = Color.white;
         switch (mouseRotation)
         {
             case MouseRotation.HorizontalRotation:
@@ -53,5 +53,16 @@ public class MouseLook : MonoBehaviour
 
 
         }
+    }
+    void OnGUI()
+    {
+        int size = 24;
+        float posX = cam.pixelWidth / 2 - size / 4;
+        float posY = cam.pixelHeight / 2 - size / 2;
+        GUIStyle myStyle = new GUIStyle();
+        myStyle.normal.textColor = Color.white;
+        myStyle.fontStyle = FontStyle.Bold;
+        myStyle.fontSize = size;
+        GUI.Label(new Rect(posX, posY, size, size), ".", myStyle);
     }
 }

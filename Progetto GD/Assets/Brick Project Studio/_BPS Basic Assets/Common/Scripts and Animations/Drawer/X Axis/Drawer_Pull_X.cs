@@ -26,9 +26,8 @@ namespace SojaExiles
 				if (Player)
 				{
 					float dist = Vector3.Distance(Player.position, transform.position);
-					if (dist < 10)
+					if (dist < 5)
 					{
-						print("object name");
 						if (open == false)
 						{
 							if (Input.GetMouseButtonDown(0))

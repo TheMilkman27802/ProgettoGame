@@ -11,9 +11,11 @@ namespace SojaExiles
 		public Animator pull;
 		public bool open;
 		public Transform Player;
+		public AudioSource pullZSound;
 
 		void Start()
 		{
+			pullZSound.enabled = false;
 			open = false;
 		}
 
@@ -57,7 +59,9 @@ namespace SojaExiles
 			print("you are opening the door");
 			pull.Play("openpull");
 			open = true;
+			pullZSound.enabled = true;
 			yield return new WaitForSeconds(.5f);
+			pullZSound.enabled = false;
 		}
 
 		IEnumerator closing()
@@ -65,7 +69,9 @@ namespace SojaExiles
 			print("you are closing the door");
 			pull.Play("closepush");
 			open = false;
+			pullZSound.enabled = true;
 			yield return new WaitForSeconds(.5f);
+			pullZSound.enabled = false;
 		}
 
 
