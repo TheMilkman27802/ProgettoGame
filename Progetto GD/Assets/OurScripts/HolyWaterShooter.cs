@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HolyWaterShooter : MonoBehaviour
 {
     public float rayRange;
+    public GameObject ghost;
     private GhostBehaviour ghostBehaviour;
     public Transform mainCamera;
     public GameObject particleSystem;
@@ -27,6 +29,8 @@ public class HolyWaterShooter : MonoBehaviour
                 if (ghostBehaviour.ghostType == GhostBehaviour.GhostType.Demon)
                 {
                     print("Demone colpito");
+                    Destroy(ghost);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
                 }
             }
         }

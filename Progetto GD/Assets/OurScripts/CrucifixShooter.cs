@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CrucifixShooter : MonoBehaviour
 {
     public float rayRange;
+    public GameObject ghost;
     private GhostBehaviour ghostBehaviour;
     public Transform laserOrigin;
     public Camera mainCamera;
@@ -34,6 +36,8 @@ public class CrucifixShooter : MonoBehaviour
                 if (ghostBehaviour.ghostType == GhostBehaviour.GhostType.Revenant)
                 {
                     print("Revenant colpito");
+                    Destroy(ghost);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
                 }
             }
             else

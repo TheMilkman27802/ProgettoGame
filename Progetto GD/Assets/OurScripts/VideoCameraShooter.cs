@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VideoCameraShooter : MonoBehaviour
 {
     public float rayRange;
+    public GameObject ghost;
     private GhostBehaviour ghostBehaviour;
     public Transform mainCamera;
     void Start()
@@ -24,6 +26,8 @@ public class VideoCameraShooter : MonoBehaviour
                 if (ghostBehaviour.ghostType == GhostBehaviour.GhostType.Thaye)
                 {
                     print("Thaye colpito");
+                    Destroy(ghost);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
                 }
             }
         }

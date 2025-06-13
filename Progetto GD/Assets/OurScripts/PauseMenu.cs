@@ -6,9 +6,14 @@ public class PauseMenu : MonoBehaviour
     public bool paused = false;
     public GameObject PauseMenuCanvas;
     public GameObject Player;
+    public AudioSource pauseMenubackgroundMusic;
+    public AudioSource gameBackgroundMusic;
+
     
     void Start()
     {
+        pauseMenubackgroundMusic.enabled = false;
+        gameBackgroundMusic.enabled = true;
         Time.timeScale = 1f;
     }
 
@@ -19,25 +24,30 @@ public class PauseMenu : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Player.GetComponent<PlayerController>().enabled = false;
             Cursor.visible = true;
+            gameBackgroundMusic.enabled = false;
+            pauseMenubackgroundMusic.enabled = true;
             if (paused){
-                Play();
-
+                PlayGame();
+                
             }else {
-                Stop();
+                
+                StopGame();
             }
         }
     }
-     void Stop(){
+     void StopGame(){
         PauseMenuCanvas.SetActive(true);
         Time.timeScale = 0f;
         paused = true;
      }
 
-    public void Play(){
+    public void PlayGame(){
         PauseMenuCanvas.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Player.GetComponent<PlayerController>().enabled = true;
         Cursor.visible = false;
+        gameBackgroundMusic.enabled = true;
+        pauseMenubackgroundMusic.enabled = false;
         Time.timeScale = 1f;
         paused = false;
         
@@ -45,5 +55,7 @@ public class PauseMenu : MonoBehaviour
 
      public void GoToMainMenu(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        pauseMenubackgroundMusic.enabled = false;
+        gameBackgroundMusic.enabled = false;
      }
 }

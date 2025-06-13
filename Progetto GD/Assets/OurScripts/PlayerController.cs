@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private float rotationX = 0;
     private CharacterController characterController;
     private bool canMove = true;
+    public AudioSource walkingFootStepsSound;
+    public AudioSource runningFootStepsSound;
 
     void Start()
     {
@@ -86,11 +88,26 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-
         characterController.Move(moveDirection * Time.deltaTime);
 
         if (canMove)
         {
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                if (Input.GetKey(KeyCode.LeftShift) && characterController.height != crouchHeight)
+                {
+                    runningFootStepsSound.enabled = true;
+                }
+                else
+                {
+                    walkingFootStepsSound.enabled = true;
+                }
+            }
+            else
+            {
+                runningFootStepsSound.enabled = false;
+                walkingFootStepsSound.enabled = false;
+            }
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
